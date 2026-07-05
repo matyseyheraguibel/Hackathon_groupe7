@@ -1,0 +1,18 @@
+# --- Cœur du pipeline (traitement des données, modèles, métriques) ---
+numpy>=1.24
+pandas>=2.0
+scikit-learn>=1.3
+lightgbm>=4.0
+torch>=2.1
+matplotlib>=3.7
+requests>=2.31
+
+# --- Notebooks (exécution + affichage) ---
+jupyterlab>=4.0
+ipython>=8.0
+plotly>=5.18
+
+# --- Utilisé uniquement dans le notebook exploratoire/de présentation ---
+# (accès à l'entrepôt de données interne de NW, non nécessaire pour rejouer
+#  le pipeline avec les CSV déjà fournis dans data/raw et data/processed)
+google-cloud-bigquery>=3.11
