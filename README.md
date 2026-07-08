@@ -34,7 +34,7 @@ détail des sources).
 ## 2. Structure du projet
 
 ```
-config/                 configuration (vide pour l'instant)
+config/                 configuration (finalement pas utilisé)
 data/
   raw/                   données brutes (prix spot, prévisions de production,
                          vent, gaz, etc.)
@@ -47,7 +47,7 @@ source/
   price_models/          modèles de prévision (interface commune fit/predict)
   critic/                réseau "critique" (loss économique custom)
   utils/                 métriques de performance, visualisation, dataset
-weights/                 poids de modèles entraînés (si sauvegardés)
+weights/                 poids de modèles entraînés (pas utilisé, on entraînait les modèles à la volée, ils sont légers)
 spot_forecast_project.ipynb   notebook de présentation du projet
 gridsearch1.ipynb             notebook de recherche d'hyperparamètres
 ```
