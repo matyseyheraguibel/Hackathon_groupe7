@@ -30,11 +30,8 @@ des prix (voir `source/utils/performance_metric.py`).
    (`fit` / `predict`, classe abstraite `PriceModel`) pour pouvoir les comparer
    facilement :
    - **LightGBM** (`GradientBoosting`) — baseline robuste sur données tabulaires.
-   - **MLP** (plusieurs variantes : `MLPPriceModel`, `MatysLPPriceModel`,
-     `MLeonardPPriceModel`, `MLPaulPriceModel`) — réseaux denses avec un
+   - **MLP** (plusieurs variantes :  de `MLPPriceModel`, avec des variations de loss / early stopping / modèles hybrides) — réseaux denses avec un
      embedding appris du jour de la semaine, concaténé aux features continues.
-   - **LSTM** (`LSTMPriceModel`) — pour capter la dépendance séquentielle de la
-     série de prix.
    - **Réseau "critique"** (`criticMLP`, `customEcoLoss`) — tentative
      d'entraîner un modèle avec une fonction de coût alignée directement sur la
      métrique économique d'arbitrage plutôt que sur une simple erreur de
@@ -96,10 +93,8 @@ des prix (voir `source/utils/performance_metric.py`).
 
 ## Organisation
 
-- Un modèle par personne/duo (`matyslp`, `mleonardp`, `mlossp`, `mlpaul`,
-  `lstm`, `gradientBoosting`), partageant le même pipeline de données et la
-  même métrique d'évaluation, pour permettre une comparaison directe des
-  approches en fin de projet.
+-  La possibilité pour tout le monde de proposer des modèles grâce à une
+  classe mère pour tous les modèles. 
 - Le notebook `gridsearch1.ipynb` a servi de banc d'essai commun pour la
   recherche d'hyperparamètres sur les différents modèles.
 - Le notebook `spot_forecast_project.ipynb` regroupe la présentation du sujet,
@@ -111,13 +106,15 @@ des prix (voir `source/utils/performance_metric.py`).
 
 - Automatiser la recherche d'hyperparamètres (au lieu d'un notebook manuel) via
   un script de gridsearch/optuna réutilisable et versionné, avec sauvegarde
-  systématique des résultats.
+  systématique des résultats, même si cela aurait peu changé la valeur de perte.
 - Ajouter des tests unitaires sur le pipeline de données (notamment
   `prepare_dataset`) pour prévenir les régressions de type désalignement de
   dates.
 - Pousser davantage l'approche "réseau critique" avec une fonction de coût
-  économique (`customEcoLoss`), qui n'a été qu'esquissée par manque de temps.
+  économique (`customEcoLoss`) pour explorer d'autres possibilités pour tenter
+  de différentier la métrique.
 - Étendre la zone de prédiction à la France et aux autres pays nordiques,
-  comme suggéré dans le sujet initial.
-- Mettre en place une validation temporelle plus robuste (walk-forward /
-  rolling backtest) plutôt qu'un simple split train/test à une date fixe.
+  comme suggéré dans le sujet initial. Cela aurait notamment permis à notre modèle
+  de prendre en input les prédictions des modèles sur les pays voisins pour enrichir ses features,
+  car les pays ont une forte interdépendance à travers les interconnexions.
+
